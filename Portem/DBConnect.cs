@@ -9,6 +9,10 @@ namespace Portem
 {
     class DBConnect
     {
+        static void fff()
+        {
+
+        }
         //SqlConnection con = new SqlConnection("server=");
     }
 }
