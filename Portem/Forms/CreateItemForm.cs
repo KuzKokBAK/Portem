@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,8 +26,54 @@ namespace Portem.Forms
 
         private void WriteItemButton_Click(object sender, EventArgs e)
         {
+            if (HeadTextBox.Text == "" || ContentTextBox.Text == "")
+            {
+                MessageBox.Show("Нельзя регестрировать пустой запрос");return;
+            }
 
+            //проверку на уже существующее название, если оно такого, ты мы просто выходим из функции
+            if (isFromExists()) return;
+           
+
+            DBConnect db = new DBConnect();
+            MySqlCommand command = new MySqlCommand("INSERT  INTO `userforms` ( `Head`, `ContentText`) VALUES (@head, @contentText)", db.GetConnection());
+            command.Parameters.Add("@head", MySqlDbType.VarChar).Value = HeadTextBox.Text;
+            command.Parameters.Add("@contentText", MySqlDbType.Text).Value = ContentTextBox.Text;
+
+            db.OpenConnection();
+
+            if (command.ExecuteNonQuery() == 1)
+                MessageBox.Show("Ваша форма создана");
+            else
+                MessageBox.Show("Форма не была зарегестрирована на сервере");
+
+            db.CloseConnection();
             Close();
+        }
+
+
+        //проверку на уже существующюю запись в БД
+        public Boolean isFromExists()
+        {
+
+            DBConnect db = new DBConnect();
+
+            DataTable table = new DataTable();
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand("SELECT * FROM `userforms` WHERE `Head` = @tH", db.GetConnection());
+            command.Parameters.Add("@tH", MySqlDbType.VarChar).Value = HeadTextBox.Text;
+            
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+
+            if (table.Rows.Count > 0)
+            {
+                MessageBox.Show("Форма с таким же название уже существует"); return true;
+            }
+            else return false;
+                
         }
 
         private void ContentTextBox_TextChanged(object sender, EventArgs e)
@@ -38,5 +85,6 @@ namespace Portem.Forms
         {
 
         }
+
     }
 }
