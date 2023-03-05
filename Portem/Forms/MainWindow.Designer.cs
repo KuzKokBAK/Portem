@@ -38,9 +38,9 @@
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(701, 45);
+            this.SearchButton.Location = new System.Drawing.Point(701, 41);
             this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(75, 23);
+            this.SearchButton.Size = new System.Drawing.Size(75, 27);
             this.SearchButton.TabIndex = 0;
             this.SearchButton.Text = "Поиск";
             this.SearchButton.UseVisualStyleBackColor = true;
@@ -79,10 +79,11 @@
             // 
             // SearchTextBox
             // 
-            this.SearchTextBox.Location = new System.Drawing.Point(164, 47);
+            this.SearchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.SearchTextBox.Location = new System.Drawing.Point(164, 41);
             this.SearchTextBox.MaxLength = 100;
             this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(531, 20);
+            this.SearchTextBox.Size = new System.Drawing.Size(531, 26);
             this.SearchTextBox.TabIndex = 4;
             this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             // 
@@ -90,11 +91,12 @@
             // 
             this.ItemTextBox.AcceptsReturn = true;
             this.ItemTextBox.AcceptsTab = true;
-            this.ItemTextBox.Enabled = false;
+            this.ItemTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ItemTextBox.Location = new System.Drawing.Point(32, 82);
             this.ItemTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.ItemTextBox.Multiline = true;
             this.ItemTextBox.Name = "ItemTextBox";
+            this.ItemTextBox.ReadOnly = true;
             this.ItemTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.ItemTextBox.Size = new System.Drawing.Size(744, 310);
             this.ItemTextBox.TabIndex = 5;

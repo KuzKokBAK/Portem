@@ -1,4 +1,5 @@
-﻿using Portem.Forms;
+﻿using MySql.Data.MySqlClient;
+using Portem.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,32 +32,37 @@ namespace Portem
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            ////получаем данные от пользователя
-            //string TextHead = HeadTextBox.Text;
-            //string TextContent = ContentTextBox.Text;
 
-            ////подключились кБД
-            //DBConnect db = new DBConnect();
-            ////подключение команд
-            //DataTable table = new DataTable();
+            //получаем данные от пользователя
+            string sTextHead = SearchTextBox.Text;
 
-            //MySqlDataAdapter adapter = new MySqlDataAdapter();
+            if (sTextHead == "")
+            {
+                ItemTextBox.Clear();
+                MessageBox.Show("Запрос пуст");
+            }
+                
+            else
+            {
+                //подключились кБД
+                DBConnect db = new DBConnect();
+                //подключение команд
+                DataTable table = new DataTable();
 
-            ////выполняем через параметр command команды sql и указывает к какой БД подключаемся
-            //MySqlCommand command = new MySqlCommand("SELECT * FROM `userforms` WHERE `Head` = @tH AND `ContentText` = @tC", db.GetConnection());
-            //command.Parameters.Add("@tH", MySqlDbType.VarChar).Value = TextHead;
-            //command.Parameters.Add("@tC", MySqlDbType.Text).Value = TextContent;
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            ////все команды которые мы получили помещаем в объект table
-            //adapter.SelectCommand = command;
-            //adapter.Fill(table);
+                //выполняем через параметр command команды sql и указывает к какой БД подключаемся
+                MySqlCommand command = new MySqlCommand("SELECT `ContentText` FROM `userforms` WHERE `Head` = @tH ", db.GetConnection());
+                command.Parameters.Add("@tH", MySqlDbType.VarChar).Value = sTextHead;
 
-            ////проверка записей
-            ////если записей пользователя больше чем 0, значит таков пользователь есть
-            //if (table.Rows.Count > 0)
-            //    MessageBox.Show("yes");
-            //else
-            //    MessageBox.Show("no");
+                db.OpenConnection();
+
+                string text = command.ExecuteScalar().ToString();
+                ItemTextBox.Text = text;
+
+                db.CloseConnection();
+            }
+
         }
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e)
